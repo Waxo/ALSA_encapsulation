@@ -5,7 +5,7 @@
  * Created on 17 décembre 2014, 12:20
  */
 
-#include "wav_functions.h"
+#include <wav_functions.h>
 
 template<typename T>
 void write(std::ofstream &stream, const T &t) {

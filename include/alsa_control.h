@@ -27,12 +27,15 @@ public:
     ~alsa_control();
 
 private:
-    unsigned int __rate;
-    unsigned int __stereo_mode;
-    int __bits;
-    snd_pcm_uframes_t __frames;
-    snd_pcm_hw_params_t *__params;
-    snd_pcm_t *__handle;
+    unsigned int _rate;
+    unsigned int _stereo_mode;
+    int _bits;
+    unsigned int _time_period;
+
+    snd_pcm_hw_params_t *_params;
+    snd_pcm_t *_handle;
+    snd_pcm_uframes_t _frames;
+    snd_pcm_uframes_t _period_size;
 
     void open_pcm_device();
     void set_parameters_ALSA();

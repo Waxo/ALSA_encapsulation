@@ -2,7 +2,7 @@
  * File:   alsa_control.h
  * Author: Maxime ROBIN
  *
- * Created on 17 février 201, 09:57
+ * Created on 17 février 2015, 09:57
  */
 
 #ifndef ALSA_CONTROL_H

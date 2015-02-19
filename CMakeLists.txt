@@ -3,7 +3,8 @@ project(ALSA_example)
 
 set(EXEC_NAME ALSA_example)
 
-find_package(ALSA)
+find_package(ALSA) #alsa
+find_package (Threads) #pthread
 
 set(INCLUDE_DIR ./include)
 
@@ -14,4 +15,4 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(SOURCE_FILES main.cpp src/wav_functions.cpp src/alsa_control.cpp)
 add_executable(${EXEC_NAME} ${SOURCE_FILES})
 
-target_link_libraries(${EXEC_NAME} ${ALSA_LIBRARIES})
+target_link_libraries(${EXEC_NAME} ${CMAKE_THREAD_LIBS_INIT} ${ALSA_LIBRARIES})

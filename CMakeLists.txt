@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.4)
-project(ALSA_example)
+project(ALSA_encapsulation)
 
-set(EXEC_NAME ALSA_example)
+set(EXEC_NAME ALSA_encapsulation)
 
 find_package(ALSA) #alsa
 find_package (Threads) #pthread
@@ -16,3 +16,4 @@ set(SOURCE_FILES main.cpp src/wav_functions.cpp src/alsa_control.cpp)
 add_executable(${EXEC_NAME} ${SOURCE_FILES})
 
 target_link_libraries(${EXEC_NAME} ${CMAKE_THREAD_LIBS_INIT} ${ALSA_LIBRARIES})
+

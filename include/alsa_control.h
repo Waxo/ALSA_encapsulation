@@ -9,21 +9,22 @@
 #define ALSA_CONTROL_H
 
 #include <iostream>
+#include <future>
+#include <functional>
 #include <alsa/asoundlib.h>
 #include <wav_functions.h>
-#include <future>
+
 
 #define STEREO 2
 #define MONO 1
-
-using std::cout;
-using std::endl;
 
 class alsa_control {
 public:
     void show_ALSA_parameters();
     void listen();
     void listen(std::string filename);
+    void listen_with_callback(std::function<void(char *, int)> func);
+    void listen_with_callback(std::function<void(char *, int)> func, std::string filename);
     void record_to_file(std::string filename, int duration_in_us);
 
     void stop();
@@ -49,6 +50,7 @@ private:
     void set_parameters_ALSA();
 
     void thread_listen(std::string filename);
+    void thread_listen_with_callback(std::function<void(char *, int)> func, std::string filename);
     void thread_record_to_file(std::string filename, int duration_in_us);
 
     alsa_control() = delete;

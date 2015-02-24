@@ -32,26 +32,30 @@ ac->stop();
 the `lambda_callback` must have the signature `void lambda_callback(char* buffer, int rc)`
 
 #Methods
-######`listen()` and `listen(std::string filename)`
-Start listening the audio input. If a filename is sent record the output in a file.
-**You must call stop() before deleting the object**
-*`listen()` is not really usefull*
+######Listen
+`listen()` and `listen(std::string filename)`<br>
+Start listening the audio input. If a filename is sent record the output in a file.<br>
+**You must call stop() before deleting the object**<br>
+*`listen()` is not really usefull*<br>
 
-######`listen_with_callback(std::function<void(char *, int)> func)` and `listen_with_callback(std::function<void(char *, int)> func, std::string filename)` 
-Start listening the audio input and send it to a callback. If a filename is sent record the output in a file.
-`char*` is the buffer with the part of the recording
-**You must call stop() before deleting the object**
+######Listen with callback
+`listen_with_callback(std::function<void(char *, int)> func)` and `listen_with_callback(std::function<void(char *, int)> func, std::string filename)` <br>
+Start listening the audio input and send it to a callback. If a filename is sent record the output in a file.<br>
+`char*` is the buffer with the part of the recording<br>
+**You must call stop() before deleting the object**<br>
 
-######`record_to_file(std::string filename, int duration_in_us)`
-Start recording the audio input to the file.
-
-######`show_ALSA_parameters()`
-Show all the parameters of the current sound card
-
-######`stop()`
+######Stop (listening)
+`stop()`
 Stop listening. Must be called after each listen* function
-
 - `listen()`
 - `listen(std::string filename)`
 - `listen_with_callback(std::function<void(char *, int)> func)`
 - `listen_with_callback(std::function<void(char *, int)> func, std::string filename)`
+
+######Record to file
+`record_to_file(std::string filename, int duration_in_us)`<br>
+Start recording the audio input to the file.
+
+######ALSA parameters
+`show_ALSA_parameters()`<br>
+Show all the parameters of the current sound card

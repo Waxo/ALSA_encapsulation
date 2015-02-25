@@ -39,13 +39,13 @@ Start listening the audio input. If a filename is sent record the output in a fi
 *`listen()` is not really usefull*<br>
 
 ####Listen with callback
-`listen_with_callback(std::function<void(char *, int)> func)` and `listen_with_callback(std::function<void(char *, int)> func, std::string filename)` <br>
+`listen_with_callback(std::function<void(char *, int)> func)` and `listen_with_callback(std::function<void(char *, int)> func, std::string filename)`<br>
 Start listening the audio input and send it to a callback. If a filename is sent record the output in a file.<br>
 `char*` is the buffer with the part of the recording<br>
 **You must call stop() before deleting the object**<br>
 
 ####Stop (listening)
-`stop()`
+`stop()`<br>
 Stop listening. Must be called after each listen* function
 - `listen()`
 - `listen(std::string filename)`

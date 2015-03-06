@@ -68,7 +68,7 @@ void alsa_control::open_pcm_device() {
 
 void alsa_control::set_parameters_ALSA() {
     snd_pcm_hw_params_any(this->_handle, this->_params); // def values
-    snd_pcm_hw_params_set_access(this->_handle, this->_params, SND_PCM_ACCESS_RW_NONINTERLEAVED); //non interleaved
+    snd_pcm_hw_params_set_access(this->_handle, this->_params, SND_PCM_ACCESS_RW_INTERLEAVED); //non interleaved
     snd_pcm_hw_params_set_format(this->_handle, this->_params, SND_PCM_FORMAT_S16_LE); //16bits little-endian
     snd_pcm_hw_params_set_channels(this->_handle, this->_params, this->_stereo_mode); // stereo ou mono
 

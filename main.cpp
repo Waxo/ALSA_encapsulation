@@ -36,7 +36,7 @@ int main() {
     alsa_control *ac = new alsa_control(16000, 2048, 16, MONO);
     lambda_class *cb = new lambda_class();
 
-    ac->show_ALSA_parameters();
+    /*ac->show_ALSA_parameters();
 
     //listen and record to file
     ac->listen("aze");
@@ -44,7 +44,7 @@ int main() {
     ac->stop();
 
     //record in a file for 10 seconds
-    ac->record_to_file("azerty", 10000000);
+    ac->record_to_file("azerty", 10000000);*/
 
     //record outside of the ALSA_control and inside, outside is in a special class
     ac->listen_with_callback(std::bind(&lambda_class::lambda_callback, cb, std::placeholders::_1, std::placeholders::_2), "qsd");

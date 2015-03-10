@@ -25,9 +25,9 @@ public:
     void listen(std::string filename);
     void listen_with_callback(std::function<void(char *, int)> func);
     void listen_with_callback(std::function<void(char *, int)> func, std::string filename);
-    void record_to_file(std::string filename, int duration_in_us);
+    void record_to_file(std::string filename, int const &duration_in_us);
 
-    void force_period_size();
+    void force_period_size(int const &value);
 
     void stop();
 
@@ -53,7 +53,7 @@ private:
 
     void thread_listen(std::string filename);
     void thread_listen_with_callback(std::function<void(char *, int)> func, std::string filename);
-    void thread_record_to_file(std::string filename, int duration_in_us);
+    void thread_record_to_file(std::string filename, int const &duration_in_us);
 
     alsa_control() = delete;
     alsa_control(const alsa_control &) = delete;

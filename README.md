@@ -53,7 +53,7 @@ Stop listening. Must be called after each listen* function
 - `listen_with_callback(std::function<void(char *, int)> func, std::string filename)`
 
 ####Record to file
-`record_to_file(std::string filename, int duration_in_us)`<br>
+`record_to_file(std::string filename, int const &duration_in_us)`<br>
 Start recording the audio input to the file.
 
 ####ALSA parameters
@@ -61,5 +61,5 @@ Start recording the audio input to the file.
 Show all the parameters of the current sound card
 
 ####Force period size
-`force_period_size`<br>
-Sometimes the period size gets wrong value (from `snd_pcm_hw_params_get_period_size`), this method force the period size to the second value in the constructor
+`force_period_size(int const &value)`<br>
+Sometimes the period size gets wrong value (from `snd_pcm_hw_params_get_period_size`), this method force the period size to the value passed

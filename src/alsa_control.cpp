@@ -123,7 +123,7 @@ void alsa_control::listen_with_callback(std::function<void(char *, int)> func, s
     }
 }
 
-void alsa_control::record_to_file(std::string filename, int duration_in_us) {
+void alsa_control::record_to_file(std::string filename, int const &duration_in_us) {
     if (!this->_continue_listening.load(std::memory_order_relaxed)) {
         this->_continue_listening.store(true, std::memory_order_relaxed);
         this->_thread = std::async(std::launch::async, &alsa_control::thread_record_to_file, this, filename, duration_in_us);
@@ -225,7 +225,7 @@ void alsa_control::thread_listen_with_callback(std::function<void(char *, int)> 
     }
 }
 
-void alsa_control::thread_record_to_file(std::string filename, int duration_in_us) {
+void alsa_control::thread_record_to_file(std::string filename, int const &duration_in_us) {
     std::ofstream f;
     int rc;
     int nb_ech = 0;
@@ -264,6 +264,6 @@ void alsa_control::thread_record_to_file(std::string filename, int duration_in_u
     free(buffer);
 }
 
-void alsa_control::force_period_size() {
-    this->_period_size = this->_frames;
+void alsa_control::force_period_size(int const &value) {
+    this->_period_size = static_cast<snd_pcm_uframes_t>(value);
 }

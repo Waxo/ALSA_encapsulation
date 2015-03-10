@@ -7,7 +7,8 @@
 
 #include <alsa_control.h>
 
-alsa_control::alsa_control(unsigned int rate, unsigned long frames, int bits, unsigned int stereo_mode) :
+alsa_control::alsa_control(unsigned int const &rate, unsigned long const &frames, int const &bits, unsigned int const &stereo_mode)
+        :
         _rate(rate),
         _frames(frames),
         _bits(bits),
@@ -146,7 +147,7 @@ void alsa_control::thread_listen(std::string filename) {
     if (filename != "") {
         filename += ".wav";
         f.open(filename, std::ios::binary);
-        write_header_wav(f, this->_rate, (short) this->_bits, (short) this->_stereo_mode, 10000); //10000 is an arbitrary constant because we don't know the size of the recording
+        write_header_wav(f, this->_rate, static_cast<short>(this->_bits), static_cast<short>(this->_stereo_mode), 10000); //10000 is an arbitrary constant because we don't know the size of the recording
     }
 
     snd_pcm_uframes_t size = this->_period_size * 2; /* 2 bytes/sample, 1 channels */
@@ -175,7 +176,7 @@ void alsa_control::thread_listen(std::string filename) {
     if (filename != "") {
         f.close();
         f.open(filename, std::ios::binary | std::ios::in);
-        write_header_wav(f, this->_rate, (short) this->_bits, (short) this->_stereo_mode, nb_ech);
+        write_header_wav(f, this->_rate, static_cast<short>(this->_bits), static_cast<short>(this->_stereo_mode), nb_ech);
         f.close();
     }
 }
@@ -188,7 +189,7 @@ void alsa_control::thread_listen_with_callback(std::function<void(char *, int)> 
     if (filename != "") {
         filename += ".wav";
         f.open(filename, std::ios::binary);
-        write_header_wav(f, this->_rate, (short) this->_bits, (short) this->_stereo_mode, 10000); //10000 is an arbitrary constant because we don't know the size of the recording
+        write_header_wav(f, this->_rate, static_cast<short>(this->_bits), static_cast<short>(this->_stereo_mode), 10000); //10000 is an arbitrary constant because we don't know the size of the recording
     }
 
     snd_pcm_uframes_t size = this->_period_size * 2; /* 2 bytes/sample, 1 channels */
@@ -219,7 +220,7 @@ void alsa_control::thread_listen_with_callback(std::function<void(char *, int)> 
     if (filename != "") {
         f.close();
         f.open(filename, std::ios::binary | std::ios::in);
-        write_header_wav(f, this->_rate, (short) this->_bits, (short) this->_stereo_mode, nb_ech);
+        write_header_wav(f, this->_rate, static_cast<short>(this->_bits), static_cast<short>(this->_stereo_mode), nb_ech);
         f.close();
     }
 }
@@ -231,7 +232,7 @@ void alsa_control::thread_record_to_file(std::string filename, int duration_in_u
 
     filename += ".wav";
     f.open(filename, std::ios::binary);
-    write_header_wav(f, this->_rate, (short) this->_bits, (short) this->_stereo_mode, 10000); //10000 is an arbitrary constant because we don't know the size of the recording
+    write_header_wav(f, this->_rate, static_cast<short>(this->_bits), static_cast<short>(this->_stereo_mode), 10000); //10000 is an arbitrary constant because we don't know the size of the recording
 
     snd_pcm_uframes_t size = this->_period_size * 2; /* 2 bytes/sample, 1 channels */
 
@@ -258,7 +259,11 @@ void alsa_control::thread_record_to_file(std::string filename, int duration_in_u
 
     f.close();
     f.open(filename, std::ios::binary | std::ios::in);
-    write_header_wav(f, this->_rate, (short) this->_bits, (short) this->_stereo_mode, nb_ech);
+    write_header_wav(f, this->_rate, static_cast<short>(this->_bits), static_cast<short>(this->_stereo_mode), nb_ech);
     f.close();
     free(buffer);
+}
+
+void alsa_control::force_period_size() {
+    this->_period_size = this->_frames;
 }

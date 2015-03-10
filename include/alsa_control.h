@@ -27,9 +27,11 @@ public:
     void listen_with_callback(std::function<void(char *, int)> func, std::string filename);
     void record_to_file(std::string filename, int duration_in_us);
 
+    void force_period_size();
+
     void stop();
 
-    alsa_control(unsigned int rate, unsigned long frames, int bits, unsigned int stereo_mode);
+    alsa_control(unsigned int const &rate, unsigned long const &frames, int const &bits, unsigned int const &stereo_mode);
     ~alsa_control();
 
 private:

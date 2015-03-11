@@ -14,13 +14,13 @@ public:
 
     lambda_class() {
         this->_nb_ech = 0;
-        this->_f.open("aaaa.wav", std::ios::binary);
+        this->_f.open("sample_8_sec_with_callback_class_callback_record.wav", std::ios::binary);
         write_header_wav(this->_f, 16000, 16, MONO, 10000);
     }
 
     ~lambda_class() {
         this->_f.close();
-        this->_f.open("aaaa.wav", std::ios::binary | std::ios::in);
+        this->_f.open("sample_8_sec_with_callback_class_callback_record.wav", std::ios::binary | std::ios::in);
         write_header_wav(this->_f, 16000, 16, MONO, this->_nb_ech);
         //cout << this->_nb_ech << endl;
     }
@@ -34,25 +34,25 @@ private:
 int main() {
 
     alsa_control *ac = new alsa_control(16000, 2048, 16, MONO);
-    lambda_class *cb = new lambda_class();
+    lambda_class *class_to_call = new lambda_class();
 
-    /*ac->show_ALSA_parameters();
+    ac->show_ALSA_parameters();
 
     //listen and record to file
-    ac->listen("aze");
+    ac->listen("sample_8_sec_with_listen");
     sleep(8);
     ac->stop();
 
     //record in a file for 10 seconds
-    ac->record_to_file("azerty", 10000000);*/
+    ac->record_to_file("sample_10_sec_with_record", 10000000);
 
     //record outside of the ALSA_control and inside, outside is in a special class
-    ac->listen_with_callback(std::bind(&lambda_class::lambda_callback, cb, std::placeholders::_1, std::placeholders::_2), "qsd");
+    ac->listen_with_callback(std::bind(&lambda_class::lambda_callback, class_to_call, std::placeholders::_1, std::placeholders::_2), "sample_8_sec_with_callback_alsa_encap_record");
     sleep(8);
     ac->stop();
 
     delete ac;
-    delete cb;
+    delete class_to_call;
 
     return 0;
 }

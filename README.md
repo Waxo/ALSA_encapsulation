@@ -24,7 +24,7 @@ ac->stop();
 
 ######Listening and using it inside an other class
 ```cpp
-ac->listen_with_callback(std::bind(&lambda_class::lambda_callback, cb, std::placeholders::_1, std::placeholders::_2), "qsd");
+ac->listen_with_callback(std::bind(&lambda_class::lambda_callback, class_to_call, std::placeholders::_1, std::placeholders::_2), "filename");
 sleep(8);
 ac->stop();
 ```

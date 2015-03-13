@@ -12,7 +12,12 @@ include_directories(${INCLUDE_DIR} ${ALSA_INCLUDE_DIRS})
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(SOURCE_FILES main.cpp src/wav_functions.cpp src/alsa_control.cpp)
+set(SOURCE_FILES
+    main.cpp
+    src/wav_functions.cpp
+    src/alsa_control.cpp
+)
+
 add_executable(${EXEC_NAME} ${SOURCE_FILES})
 
 target_link_libraries(${EXEC_NAME} ${CMAKE_THREAD_LIBS_INIT} ${ALSA_LIBRARIES})

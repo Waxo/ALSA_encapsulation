@@ -5,8 +5,8 @@
  * Created on 17 février 2015, 09:57
  */
 
-#ifndef ALSA_CONTROL_H
-#define ALSA_CONTROL_H
+#ifndef _ALSA_ENCAPSULATION_ALSA_CONTROL_H_
+#define _ALSA_ENCAPSULATION_ALSA_CONTROL_H_
 
 #include <iostream>
 #include <future>
@@ -59,4 +59,4 @@ private:
     alsa_control(const alsa_control &) = delete;
 };
 
-#endif /* ALSA_CONTROL_H */
+#endif //_ALSA_ENCAPSULATION_ALSA_CONTROL_H_

@@ -234,7 +234,7 @@ void alsa_control::thread_record_to_file(std::string filename, int const &durati
     f.open(filename, std::ios::binary);
     write_header_wav(f, this->_rate, static_cast<short>(this->_bits), static_cast<short>(this->_stereo_mode), 10000); //10000 is an arbitrary constant because we don't know the size of the recording
 
-    snd_pcm_uframes_t size = this->_period_size * 2; /* 2 bytes/sample, 1 channels */
+    snd_pcm_uframes_t size = this->_period_size * 2 * this->_stereo_mode; /* 2 bytes/sample, 1 channels */
 
     char *buffer = (char *) malloc(size);
     long loops = duration_in_us / this->_time_period;

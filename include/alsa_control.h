@@ -1,12 +1,5 @@
-/*
- * File:   alsa_control.h
- * Author: Maxime ROBIN
- *
- * Created on 17 février 2015, 09:57
- */
-
-#ifndef _ALSA_ENCAPSULATION_ALSA_CONTROL_H_
-#define _ALSA_ENCAPSULATION_ALSA_CONTROL_H_
+#ifndef ALSA_ENCAPSULATION_ALSA_CONTROL_H_
+#define ALSA_ENCAPSULATION_ALSA_CONTROL_H_
 
 #include <iostream>
 #include <future>
@@ -35,18 +28,18 @@ public:
     ~alsa_control();
 
 private:
-    unsigned int _rate;
-    unsigned int _stereo_mode;
-    int _bits;
-    unsigned int _time_period;
+    unsigned int rate_;
+    unsigned int stereo_mode_;
+    int bits_;
+    unsigned int time_period_;
 
-    snd_pcm_hw_params_t *_params;
-    snd_pcm_t *_handle;
-    snd_pcm_uframes_t _frames;
-    snd_pcm_uframes_t _period_size;
+    snd_pcm_hw_params_t *params_;
+    snd_pcm_t *handle_;
+    snd_pcm_uframes_t frames_;
+    snd_pcm_uframes_t period_size_;
 
-    std::atomic<bool> _continue_listening;
-    std::future<void> _thread;
+    std::atomic<bool> continue_listening_;
+    std::future<void> thread_;
 
     void open_pcm_device();
     void set_parameters_ALSA();
@@ -59,4 +52,4 @@ private:
     alsa_control(const alsa_control &) = delete;
 };
 
-#endif //_ALSA_ENCAPSULATION_ALSA_CONTROL_H_
+#endif //ALSA_ENCAPSULATION_ALSA_CONTROL_H_

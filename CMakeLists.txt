@@ -13,9 +13,9 @@ include_directories(${INCLUDE_DIR} ${ALSA_INCLUDE_DIRS})
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 set(SOURCE_FILES
-    main.cpp
-    src/wav_functions.cpp
-    src/alsa_control.cpp
+    main.cc
+    src/wav_functions.cc
+    src/alsa_control.cc
 )
 
 add_executable(${EXEC_NAME} ${SOURCE_FILES})

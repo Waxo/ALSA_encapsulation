@@ -155,7 +155,7 @@ void alsa_control::thread_listen(std::string filename) {
                      10000); //10000 is an arbitrary constant because we don't know the size of the recording
   }
 
-  snd_pcm_uframes_t size = this->period_size_ * 2; /* 2 bytes/sample, 1 channels */
+  snd_pcm_uframes_t size = this->period_size_ * 2 * this->stereo_mode_; /* 2 bytes/sample, 1 channels */
   char *buffer = (char *) malloc(size);
 
 
@@ -199,7 +199,7 @@ void alsa_control::thread_listen_with_callback(std::function<void(char *, int)> 
     write_header_wav(f, this->rate_, static_cast<short>(this->bits_), static_cast<short>(this->stereo_mode_), 10000);
   }
 
-  snd_pcm_uframes_t size = this->period_size_ * 2; /* 2 bytes/sample, 1 channels */
+  snd_pcm_uframes_t size = this->period_size_ * 2 * this->stereo_mode_; /* 2 bytes/sample, 1 channels */
   char *buffer = (char *) malloc(size);
 
 

@@ -29,13 +29,13 @@ public:
 
 private:
   unsigned int rate_;
-  unsigned int stereo_mode_;
+  snd_pcm_uframes_t frames_;
   int bits_;
-  unsigned int time_period_;
+  unsigned int stereo_mode_;
 
+  unsigned int time_period_;
   snd_pcm_hw_params_t *params_;
   snd_pcm_t *handle_;
-  snd_pcm_uframes_t frames_;
   snd_pcm_uframes_t period_size_;
 
   std::atomic<bool> continue_listening_;

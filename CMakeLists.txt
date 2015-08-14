@@ -10,7 +10,7 @@ set(INCLUDE_DIR ./include)
 
 include_directories(${INCLUDE_DIR} ${ALSA_INCLUDE_DIRS})
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
 
 set(SOURCE_FILES
     main.cc

@@ -7,9 +7,9 @@ using std::endl;
 
 class lambda_class {
 public:
-  void lambda_callback(char *c, int rc) {
+  void lambda_callback(void *c, int rc) {
     this->sample_count_ += rc;
-    this->output_file_.write(c, rc * 2);
+    this->output_file_.write(static_cast<char *>(c), rc * 2);
   }
 
   lambda_class() {
@@ -37,15 +37,15 @@ int main() {
 
   ac->show_ALSA_parameters();
 
-  //listen and record to file
+  std::cout << "listen and record to file" << std::endl;
   ac->listen("sample_8_sec_with_listen");
   sleep(8);
   ac->stop();
 
-  //record in a file for 10 seconds
+  std::cout << "record in a file for 10 seconds" << std::endl;
   ac->record_to_file("sample_10_sec_with_record", 10000000);
 
-  //record outside of the ALSA_control and inside, outside is in a special class
+  std::cout << "record outside of the ALSA_control and inside, outside is in a special class" << std::endl;
   ac->listen_with_callback(
       std::bind(&lambda_class::lambda_callback, class_to_call, std::placeholders::_1, std::placeholders::_2),
       "sample_8_sec_with_callback_alsa_encap_record");

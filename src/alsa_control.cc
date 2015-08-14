@@ -107,7 +107,7 @@ void alsa_control::listen(std::string filename) {
   }
 }
 
-void alsa_control::listen_with_callback(std::function<void(char *, int)> func) {
+void alsa_control::listen_with_callback(std::function<void(void *, int)> func) {
   if (!this->continue_listening_.load(std::memory_order_relaxed)) {
     this->continue_listening_.store(true, std::memory_order_relaxed);
     this->thread_ = std::async(std::launch::async, &alsa_control::thread_listen_with_callback, this, func, "");
@@ -116,7 +116,7 @@ void alsa_control::listen_with_callback(std::function<void(char *, int)> func) {
   }
 }
 
-void alsa_control::listen_with_callback(std::function<void(char *, int)> func, std::string filename) {
+void alsa_control::listen_with_callback(std::function<void(void *, int)> func, std::string filename) {
   if (!this->continue_listening_.load(std::memory_order_relaxed)) {
     this->continue_listening_.store(true, std::memory_order_relaxed);
     this->thread_ = std::async(std::launch::async, &alsa_control::thread_listen_with_callback, this, func,
@@ -156,7 +156,7 @@ void alsa_control::thread_listen(std::string filename) {
   }
 
   snd_pcm_uframes_t size = this->period_size_ * 2 * this->stereo_mode_; /* 2 bytes/sample, 1 channels */
-  char *buffer = (char *) malloc(size);
+  void *buffer = malloc(size);
 
 
   while (this->continue_listening_.load(std::memory_order_relaxed)) {
@@ -171,7 +171,7 @@ void alsa_control::thread_listen(std::string filename) {
     }
 
     if (rc > 0 && filename != "") {
-      f.write(buffer, rc * 2);
+      f.write(static_cast<char *>(buffer), rc * 2);
       nb_ech += rc;
     }
   }
@@ -187,7 +187,7 @@ void alsa_control::thread_listen(std::string filename) {
   }
 }
 
-void alsa_control::thread_listen_with_callback(std::function<void(char *, int)> func, std::string filename) {
+void alsa_control::thread_listen_with_callback(std::function<void(void *, int)> func, std::string filename) {
   std::ofstream f;
   int rc;
   int nb_ech = 0;
@@ -200,7 +200,7 @@ void alsa_control::thread_listen_with_callback(std::function<void(char *, int)> 
   }
 
   snd_pcm_uframes_t size = this->period_size_ * 2 * this->stereo_mode_; /* 2 bytes/sample, 1 channels */
-  char *buffer = (char *) malloc(size);
+  void *buffer = malloc(size);
 
 
   while (this->continue_listening_.load(std::memory_order_relaxed)) {
@@ -215,7 +215,7 @@ void alsa_control::thread_listen_with_callback(std::function<void(char *, int)> 
     }
 
     if (rc > 0 && filename != "") {
-      f.write(buffer, rc * 2);
+      f.write(static_cast<char *>(buffer), rc * 2);
       nb_ech += rc;
     }
 
@@ -245,7 +245,7 @@ void alsa_control::thread_record_to_file(std::string filename, int const &durati
 
   snd_pcm_uframes_t size = this->period_size_ * 2 * this->stereo_mode_; /* 2 bytes/sample, 1 channels */
 
-  char *buffer = (char *) malloc(size);
+  void *buffer = malloc(size);
   long loops = duration_in_us / this->time_period_;
 
   while (loops-- > 0) {
@@ -260,7 +260,7 @@ void alsa_control::thread_record_to_file(std::string filename, int const &durati
     }
 
     if (rc > 0) {
-      f.write(buffer, rc * 2);
+      f.write(static_cast<char *> (buffer), rc * 2);
     }
 
     nb_ech += rc;

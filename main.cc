@@ -37,15 +37,15 @@ int main() {
 
   ac->show_ALSA_parameters();
 
-  std::cout << "listen and record to file" << std::endl;
+  std::cout << std::endl << "Listen and record to file" << std::endl;
   ac->listen("sample_8_sec_with_listen");
   sleep(8);
   ac->stop();
 
-  std::cout << "record in a file for 10 seconds" << std::endl;
+  std::cout << std::endl << "Record in a file for 10 seconds" << std::endl;
   ac->record_to_file("sample_10_sec_with_record", 10000000);
 
-  std::cout << "record outside of the ALSA_control and inside, outside is in a special class" << std::endl;
+  std::cout << std::endl << "Record inside and outside of the ALSA_control, outside is in a special class" << std::endl;
   ac->listen_with_callback(
       std::bind(&lambda_class::lambda_callback, class_to_call, std::placeholders::_1, std::placeholders::_2),
       "sample_8_sec_with_callback_alsa_encap_record");

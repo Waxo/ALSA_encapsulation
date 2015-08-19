@@ -179,8 +179,6 @@ void alsa_control::thread_listen(std::string filename) {
   free(buffer);
 
   if (filename != "") {
-    f.close();
-    f.open(filename, std::ios::binary | std::ios::in);
     write_header_wav(f, this->rate_, static_cast<short>(this->bits_), static_cast<short>(this->stereo_mode_),
                      nb_ech);
     f.close();
@@ -225,8 +223,6 @@ void alsa_control::thread_listen_with_callback(std::function<void(void *, int)> 
   free(buffer);
 
   if (filename != "") {
-    f.close();
-    f.open(filename, std::ios::binary | std::ios::in);
     write_header_wav(f, this->rate_, static_cast<short>(this->bits_), static_cast<short>(this->stereo_mode_),
                      nb_ech);
     f.close();
@@ -266,8 +262,6 @@ void alsa_control::thread_record_to_file(std::string filename, int const &durati
     nb_ech += rc;
   }
 
-  f.close();
-  f.open(filename, std::ios::binary | std::ios::in);
   write_header_wav(f, this->rate_, static_cast<short>(this->bits_), static_cast<short>(this->stereo_mode_), nb_ech);
   f.close();
   free(buffer);

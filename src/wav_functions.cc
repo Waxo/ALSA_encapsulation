@@ -16,7 +16,7 @@ void write(std::ofstream &stream, const T &t) {
 void write_header_wav(std::ofstream &stream, const int &sample_rate, const short int &bits, const short int &stereo,
                       const long sample_nb) {
   int file_size;
-
+  stream.seekp(0, std::ios_base::beg);
   file_size = (int) sample_nb * stereo * (bits / 8);
   stream.write("RIFF", 4);
   write<int>(stream, 36 + file_size);

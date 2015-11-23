@@ -5,7 +5,7 @@
 #include <future>
 #include <functional>
 #include <alsa/asoundlib.h>
-#include <wav_functions.h>
+#include <WavFunctions.h>
 
 
 #define STEREO 2

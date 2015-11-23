@@ -14,8 +14,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
 
 set(SOURCE_FILES
   main.cc
-  src/wav_functions.cc
-  src/alsa_control.cc)
+  src/WavFunctions.cc
+  src/AlsaControl.cc)
 
 add_executable(${EXEC_NAME} ${SOURCE_FILES})
 

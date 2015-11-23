@@ -1,5 +1,5 @@
 #include <iostream>
-#include "alsa_control.h"
+#include "AlsaControl.h"
 
 using std::cout;
 using std::endl;

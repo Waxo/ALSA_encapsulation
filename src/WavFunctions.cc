@@ -1,4 +1,4 @@
-#include <wav_functions.h>
+#include "WavFunctions.h"
 
 template<typename T>
 void write(std::ofstream &stream, const T &t) {

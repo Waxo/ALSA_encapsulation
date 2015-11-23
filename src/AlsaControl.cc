@@ -1,4 +1,4 @@
-#include "alsa_control.h"
+#include "AlsaControl.h"
 
 AlsaControl::AlsaControl(unsigned int const &rate, unsigned long const &frames,
     int const &bits, unsigned int const &stereo_mode)

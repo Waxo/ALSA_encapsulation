@@ -13,7 +13,8 @@ void write(std::ofstream &stream, const T &t) {
 * @param stereo 1 is mono 2 is stereo
 * @param sample_nb the number of samples
 */
-void write_header_wav(std::ofstream &stream, const int &sample_rate, const short int &bits, const short int &stereo,
+void WriteHeaderWav(std::ofstream &stream, const int &sample_rate,
+    const short int &bits, const short int &stereo,
                       const long sample_nb) {
   int file_size;
   stream.seekp(0, std::ios_base::beg);

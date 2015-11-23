@@ -1,3 +1,7 @@
+/sample_10_sec_with_record.wav
+/sample_8_sec_with_callback_class_callback_record.wav
+/sample_8_sec_with_callback_alsa_encap_record.wav
+/sample_8_sec_with_listen.wav
 # Created by .ignore support plugin (hsz.mobi)
 ### CMake template
 CMakeCache.txt

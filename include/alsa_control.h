@@ -11,21 +11,23 @@
 #define STEREO 2
 #define MONO 1
 
-class alsa_control {
+class AlsaControl {
 public:
-  void show_ALSA_parameters();
-  void listen();
-  void listen(std::string filename);
-  void listen_with_callback(std::function<void(void *, int)> func);
-  void listen_with_callback(std::function<void(void *, int)> func, std::string filename);
-  void record_to_file(std::string filename, int const &duration_in_us);
+  void ShowALSAParameters();
+  void Listen();
+  void Listen(std::string filename);
+  void ListenWithCallback(std::function<void(void *, int)> func);
+  void ListenWithCallback(std::function<void(void *, int)> func,
+      std::string filename);
+  void RecordToFile(std::string filename, int const &duration_in_us);
 
-  void force_period_size(int const &value);
+  void ForcePeriodSize(int const &value);
 
-  void stop();
+  void Stop();
 
-  alsa_control(unsigned int const &rate, unsigned long const &frames, int const &bits, unsigned int const &stereo_mode);
-  ~alsa_control();
+  AlsaControl(unsigned int const &rate, unsigned long const &frames,
+      int const &bits, unsigned int const &stereo_mode);
+  virtual ~AlsaControl();
 
 private:
   unsigned int rate_;
@@ -41,15 +43,16 @@ private:
   std::atomic<bool> continue_listening_;
   std::future<void> thread_;
 
-  void open_pcm_device();
-  void set_parameters_ALSA();
+  void OpenPcmDevice();
+  void SetParametersALSA();
 
-  void thread_listen(std::string filename);
-  void thread_listen_with_callback(std::function<void(void *, int)> func, std::string filename);
-  void thread_record_to_file(std::string filename, int const &duration_in_us);
+  void ThreadListen(std::string filename);
+  void ThreadListenWithCallback(std::function<void(void *, int)> func,
+      std::string filename);
+  void ThreadRecordToFile(std::string filename, int const &duration_in_us);
 
-  alsa_control() = delete;
-  alsa_control(const alsa_control &) = delete;
+  AlsaControl() = delete;
+  AlsaControl(const AlsaControl &) = delete;
 };
 
 #endif //ALSA_ENCAPSULATION_ALSA_CONTROL_H_

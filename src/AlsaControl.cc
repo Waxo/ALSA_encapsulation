@@ -1,7 +1,7 @@
 #include "AlsaControl.h"
 
-AlsaControl::AlsaControl(unsigned int const &rate, unsigned long const &frames,
-    int const &bits, unsigned int const &stereo_mode)
+AlsaControl::AlsaControl(unsigned int const& rate, unsigned long const& frames,
+    int const& bits, unsigned int const& stereo_mode)
     :
     rate_(rate),
     frames_(frames),
@@ -21,7 +21,7 @@ AlsaControl::~AlsaControl() {
 
   if (continue_listening_.load(std::memory_order_relaxed)) {
     std::cout << std::endl << "ERROR - All process seems not finished" <<
-        std::endl;
+              std::endl;
     exit(1);
   }
 }
@@ -34,29 +34,29 @@ void AlsaControl::ShowALSAParameters() {
   std::cout << std::endl << "PCM stream types:" << std::endl;
   for (val = 0; val <= SND_PCM_STREAM_LAST; val++)
     std::cout << " " << snd_pcm_stream_name((snd_pcm_stream_t) val) <<
-        std::endl;
+              std::endl;
 
   std::cout << std::endl << "PCM access types:" << std::endl;
   for (val = 0; val <= SND_PCM_ACCESS_LAST; val++)
     std::cout << " " << snd_pcm_access_name((snd_pcm_access_t) val) <<
-        std::endl;
+              std::endl;
 
   std::cout << std::endl << "PCM formats:" << std::endl;
   for (val = 0; val <= SND_PCM_FORMAT_LAST; val++) {
     if (snd_pcm_format_name((snd_pcm_format_t) val) != NULL) {
       std::cout << "  " << snd_pcm_format_name((snd_pcm_format_t) val) <<
-          " (" <<
-          snd_pcm_format_description((snd_pcm_format_t) val) << ")" <<
-          std::endl;
+                " (" <<
+                snd_pcm_format_description((snd_pcm_format_t) val) << ")" <<
+                std::endl;
     }
   }
 
   std::cout << std::endl << "PCM subformats:" << std::endl;
   for (val = 0; val <= SND_PCM_SUBFORMAT_LAST; val++) {
     std::cout << "  " << snd_pcm_subformat_name((snd_pcm_subformat_t) val) <<
-        " (" <<
-        snd_pcm_subformat_description((snd_pcm_subformat_t) val) << ")" <<
-        std::endl;
+              " (" <<
+              snd_pcm_subformat_description((snd_pcm_subformat_t) val) << ")" <<
+              std::endl;
   }
 
   std::cout << std::endl << "PCM states:" << std::endl;
@@ -70,7 +70,7 @@ void AlsaControl::OpenPcmDevice() {
 
   if (rc < 0) {
     std::cout << "ERROR :  unable to open pcm device: " << snd_strerror(rc) <<
-        std::endl;
+              std::endl;
     exit(1);
   }
 }
@@ -99,7 +99,7 @@ void AlsaControl::SetParametersALSA() {
   int rc = snd_pcm_hw_params(handle_, params_);
   if (rc < 0) {
     std::cout << "ERROR - unable to set hw parameters: " << snd_strerror(rc) <<
-        std::endl;
+              std::endl;
     exit(1);
   }
 
@@ -115,7 +115,7 @@ void AlsaControl::Listen() {
     );
   } else {
     std::cout << "ERROR - System is already listening/recording use stop()" <<
-        std::endl;
+              std::endl;
   }
 }
 
@@ -127,11 +127,11 @@ void AlsaControl::Listen(std::string filename) {
     );
   } else {
     std::cout << "ERROR - System is already listening/recording use stop()" <<
-        std::endl;
+              std::endl;
   }
 }
 
-void AlsaControl::ListenWithCallback(std::function<void(void *, int)> func) {
+void AlsaControl::ListenWithCallback(std::function<void(void*, int)> func) {
   if (!continue_listening_.load(std::memory_order_relaxed)) {
     continue_listening_.store(true, std::memory_order_relaxed);
     thread_ = std::async(std::launch::async,
@@ -139,11 +139,11 @@ void AlsaControl::ListenWithCallback(std::function<void(void *, int)> func) {
     );
   } else {
     std::cout << "ERROR - System is already listening/recording use stop()" <<
-        std::endl;
+              std::endl;
   }
 }
 
-void AlsaControl::ListenWithCallback(std::function<void(void *, int)> func,
+void AlsaControl::ListenWithCallback(std::function<void(void*, int)> func,
     std::string filename) {
   if (!continue_listening_.load(std::memory_order_relaxed)) {
     continue_listening_.store(true, std::memory_order_relaxed);
@@ -153,12 +153,12 @@ void AlsaControl::ListenWithCallback(std::function<void(void *, int)> func,
     );
   } else {
     std::cout << "ERROR - System is already listening/recording use stop()" <<
-        std::endl;
+              std::endl;
   }
 }
 
 void AlsaControl::RecordToFile(std::string filename,
-    int const &duration_in_us) {
+    int const& duration_in_us) {
   if (!continue_listening_.load(std::memory_order_relaxed)) {
     continue_listening_.store(true, std::memory_order_relaxed);
     thread_ = std::async(std::launch::async,
@@ -169,7 +169,7 @@ void AlsaControl::RecordToFile(std::string filename,
     continue_listening_.store(false, std::memory_order_relaxed);
   } else {
     std::cout << std::endl <<
-        "ERROR - System is already listening/recording use stop()";
+              "ERROR - System is already listening/recording use stop()";
   }
 }
 
@@ -187,14 +187,14 @@ void AlsaControl::ThreadListen(std::string filename) {
     filename += ".wav";
     f.open(filename, std::ios::binary);
     WriteHeaderWav(f, rate_, static_cast<short>(bits_),
-        static_cast<short>(stereo_mode_),
-        10000
-    ); //10000 is an arbitrary constant because we don't know the size of the recording
+        static_cast<short>(stereo_mode_), 10000);
+    // 10000 is an arbitrary constant because we don't know yet
+    // the size of the recording
   }
 
   snd_pcm_uframes_t size = period_size_ * 2 *
       stereo_mode_; /* 2 bytes/sample, 1 channels */
-  void *buffer = malloc(size);
+  void* buffer = malloc(size);
 
 
   while (continue_listening_.load(std::memory_order_relaxed)) {
@@ -209,7 +209,7 @@ void AlsaControl::ThreadListen(std::string filename) {
     }
 
     if (rc > 0 && filename != "") {
-      f.write(static_cast<char *>(buffer), rc * 2);
+      f.write(static_cast<char*>(buffer), rc * 2 * stereo_mode_);
       nb_ech += rc;
     }
   }
@@ -226,7 +226,7 @@ void AlsaControl::ThreadListen(std::string filename) {
 }
 
 void AlsaControl::ThreadListenWithCallback(
-    std::function<void(void *, int)> func, std::string filename) {
+    std::function<void(void*, int)> func, std::string filename) {
   std::ofstream f;
   int rc;
   int nb_ech = 0;
@@ -234,7 +234,6 @@ void AlsaControl::ThreadListenWithCallback(
   if (filename != "") {
     filename += ".wav";
     f.open(filename, std::ios::binary);
-    //10000 is an arbitrary constant because we don't know the size of the recording
     WriteHeaderWav(f, rate_, static_cast<short>(bits_),
         static_cast<short>(stereo_mode_), 10000
     );
@@ -242,7 +241,7 @@ void AlsaControl::ThreadListenWithCallback(
 
   snd_pcm_uframes_t size = period_size_ * 2 *
       stereo_mode_; /* 2 bytes/sample, 1 channels */
-  void *buffer = malloc(size);
+  void* buffer = malloc(size);
 
 
   while (continue_listening_.load(std::memory_order_relaxed)) {
@@ -257,7 +256,7 @@ void AlsaControl::ThreadListenWithCallback(
     }
 
     if (rc > 0 && filename != "") {
-      f.write(static_cast<char *>(buffer), rc * 2);
+      f.write(static_cast<char*>(buffer), rc * 2 * stereo_mode_);
       nb_ech += rc;
     }
 
@@ -275,7 +274,7 @@ void AlsaControl::ThreadListenWithCallback(
 }
 
 void AlsaControl::ThreadRecordToFile(std::string filename,
-    int const &duration_in_us) {
+    int const& duration_in_us) {
   std::ofstream f;
   int rc;
   int nb_ech = 0;
@@ -283,13 +282,12 @@ void AlsaControl::ThreadRecordToFile(std::string filename,
   filename += ".wav";
   f.open(filename, std::ios::binary);
   WriteHeaderWav(f, rate_, static_cast<short>(bits_),
-      static_cast<short>(stereo_mode_), 10000
-  ); //10000 is an arbitrary constant because we don't know the size of the recording
+      static_cast<short>(stereo_mode_), 10000);
 
   // 2 bytes/sample, 1 channels
   snd_pcm_uframes_t size = period_size_ * 2 * stereo_mode_;
 
-  void *buffer = malloc(size);
+  void* buffer = malloc(size);
   long loops = duration_in_us / time_period_;
 
   while (loops-- > 0) {
@@ -304,7 +302,7 @@ void AlsaControl::ThreadRecordToFile(std::string filename,
     }
 
     if (rc > 0) {
-      f.write(static_cast<char *> (buffer), rc * 2);
+      f.write(static_cast<char*> (buffer), rc * 2 * stereo_mode_);
     }
 
     nb_ech += rc;
@@ -317,6 +315,6 @@ void AlsaControl::ThreadRecordToFile(std::string filename,
   free(buffer);
 }
 
-void AlsaControl::ForcePeriodSize(int const &value) {
+void AlsaControl::ForcePeriodSize(int const& value) {
   period_size_ = static_cast<snd_pcm_uframes_t>(value);
 }

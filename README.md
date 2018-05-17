@@ -31,7 +31,7 @@ ac->Stop();
 
 The `LambdaCallback` must have the signature `void LambdaCallback(char* buffer, int rc)`
 
-#Methods
+# Methods
 #### Listen
 `Listen()` and `Listen(std::string filename)`<br>
 Start listening the audio input. If a filename is sent record the output in a file.<br>
